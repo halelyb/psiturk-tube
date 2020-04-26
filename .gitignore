@@ -1,0 +1,10 @@
+heroku*
+participants.db
+*.pyc
+Procfile
+requirements
+requirements.txt
+server.log
+set-heroku*
+.psiturk_history
+*.avi
