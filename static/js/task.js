@@ -18,6 +18,7 @@ var pages = [
 	"instructions/instruct-3.html",
 	"instructions/instruct-ready.html",
 	"stage.html",
+	"stage2.html",
 	"postquestionnaire.html"
 ];
 
@@ -26,7 +27,7 @@ psiTurk.preloadPages(pages);
 var instructionPages = [ // add as a list as many pages as you like
 	"instructions/instruct-1.html",
 	"instructions/instruct-2.html",
-	"instructions/instruct-3.html",
+	//"instructions/instruct-3.html",
 	"instructions/instruct-ready.html"
 ];
 
@@ -41,7 +42,7 @@ var instructionPages = [ // add as a list as many pages as you like
 *
 ********************/
 
-var ExperimentFunction = function() {
+var Stage1 = function() {
 
 	var stimOnsetTime, mouseClickTime; 
 	var keyboardResonseEnabled = false, mouseResonseEnabled = false, mouseTrackingEnabled = false;
@@ -197,7 +198,7 @@ var ExperimentFunction = function() {
 	stims = _.shuffle(stims);
 
 	// FOR DEBUGGING ONLY!!!
-	stims = _.first(stims, 10);
+	stims = _.first(stims, 1);
 
 	var next = function() {
 		if (stims.length===0) {
@@ -231,7 +232,8 @@ var ExperimentFunction = function() {
 
 			psiTurk.recordTrialData(Object.assign(
 			{
-				'phase':"TEST",				
+				'phase':"TEST",
+				'stagf': 1,				
 				'mouseHitMap': mouseHitMap,
 				'videoHieght': videoRectangle.height,
 				'videoWidth': videoRectangle.width,
@@ -286,7 +288,7 @@ var ExperimentFunction = function() {
 	    $("body").unbind("mousemove", handleMouseMove); // Unbind keys
 	    $("body").unbind("mousedown", handleMouseDown); // Unbind keys
 	    $("body").unbind("keydown", response_handler); // Unbind keys
-	    currentview = new Questionnaire();
+	    currentview = new Stage2();
 	};
 	
 	var show_video = function(videoData) {
@@ -294,7 +296,7 @@ var ExperimentFunction = function() {
 			.append("video")
 			.attr("id","stim-video" + videoData.id.toString())
 			.attr("autoplay", true)
-			.style("height","300px")
+			.style("height","400px")
 		videoElement
 			.append("source")
 			.attr("src", videoData.filename)
@@ -337,6 +339,100 @@ var ExperimentFunction = function() {
 	$("body").focus().keydown(response_handler); 
 	$("body").focus().mousemove(handleMouseMove);
 	$("body").focus().mousedown(handleMouseDown);
+
+	// Start the test
+	next();
+};
+
+var Stage2 = function() {
+	var sliderElement;
+	var stim;
+
+	var stims = [
+		"occluder_85f_37",
+		"occluder_85f_49",
+		"occluder_85f_61",
+		"occluder_85f_73",
+		"occluder_85f_85",
+	]
+
+	stims = _.map(stims, function (s,i) {
+		var videoParams = s.split("_").slice(2);
+		return Object.assign(
+			{
+				filename: "static/stimuli/" + s + ".avi",
+				id: i, 
+				videoformat: "avi", 
+				videoname: s,
+				ball_speed: videoParams[0]
+			});
+	});
+	stims = _.shuffle(stims);
+
+	// FOR DEBUGGING ONLY!!!
+	stims = _.first(stims, 10);
+
+	var next = function() {
+		if (stims.length===0) {
+			finish();
+		}
+		else {
+			stim = stims.shift();
+			show_video(stim);
+		}
+	};
+	
+	var on_click_next = function(e) {
+		var trialTime = new Date().getTime() - stimOnsetTime;
+		psiTurk.recordTrialData(Object.assign(
+		{
+			'phase':"TEST",		
+			'stage': 2,		
+			'hit': true,
+			'trialTime':trialTime,
+          	'response': 9999 //sliderElement.value,
+         }, stim));
+		remvoe_video();
+		next();
+	};
+
+	// stop showing stimuli and move to questionnaire
+	var finish = function() {
+	    currentview = new Questionnaire();
+	};
+	
+	var show_video = function(videoData) {
+		var videoElement = d3.select("#stim")
+			.append("video")
+			.attr("id","stim-video" + videoData.id.toString())
+			.attr("autoplay", true)
+			.style("height","400px")
+		videoElement
+			.append("source")
+			.attr("src", videoData.filename)
+			.attr("type", "video/" + videoData.videoformat);
+
+		// when video starts!
+		videoElement.on("loadeddata", function() {
+			stimOnsetTime = new Date().getTime();
+		});
+
+		// on video paused
+		videoElement.on("pause", function() {
+		});
+	};
+
+	var remvoe_video = function() {
+		d3.select("#stim").html("");
+	};
+
+	
+	// Load the stage.html snippet into the body of the page
+	psiTurk.showPage('stage2.html');
+
+	// setup next button
+	var btn = document.getElementById("next");
+	btn.onclick = on_click_next;
 
 	// Start the test
 	next();
@@ -415,6 +511,6 @@ var currentview;
 $(window).load( function(){
     psiTurk.doInstructions(
     	instructionPages, // a list of pages you want to display in sequence
-    	function() { currentview = new ExperimentFunction(); } // what you want to do when you are done with instructions
+    	function() { currentview = new Stage1(); } // what you want to do when you are done with instructions
     );
 });
