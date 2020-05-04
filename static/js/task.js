@@ -296,7 +296,7 @@ var Stage1 = function() {
 			.append("video")
 			.attr("id","stim-video" + videoData.id.toString())
 			.attr("autoplay", true)
-			.style("height","400px")
+			.attr("style", "height:400px;")
 		videoElement
 			.append("source")
 			.attr("src", videoData.filename)
@@ -406,7 +406,7 @@ var Stage2 = function() {
 			.append("video")
 			.attr("id","stim-video" + videoData.id.toString())
 			.attr("autoplay", true)
-			.style("height","400px")
+			.attr("style" ,"height:400px;")
 		videoElement
 			.append("source")
 			.attr("src", videoData.filename)

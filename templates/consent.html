@@ -38,25 +38,34 @@
     <body>
         <div id="container-consent">
             <div id="consent">
-                <h1>We need your consent to proceed</h1>
-                <hr />
+                <h1>MIT Computational Cognitive Science Group</h1>
+                <hr>
                 <div class="legal well">
-                    <p>
-                    You have been invited to take part in a research study named BLAH BLAH
+                   <p>
+                    By answering the following questions, you are participating in a study 
+                    being performed by cognitive scientists in the MIT Department of Brain and 
+                    Cognitive Science. The study usually takes ~30 minutes. If you have questions 
+                    about this research, please contact us at <a href="halely@mit.edu">halely@mit.edu</a>. 
                     </p>
-                    <p>
-                    Put your consent form here.  If you are a worker and are viewing this
-                    please decline the HIT.  This requester doesn't know what they are doing.
-                    </p>
+                    
+                    <p>By selecting the "I Agree" button below, you
+                    acknowledge that:</p>
+                  <ul>
+                    <li>You must be at least 18 years old to participate.</li>
+                    <li>Your participation in this research is voluntary.</li>
+                    <li>You may decline to answer any or all of the following questions by closing this window in your browser.</li>
+                    <li>You may decline further participation, at any time, without adverse consequences.</li>
+                    <li>Your anonymity is assured; the researchers who have requested your participation will not receive any personal information about you.</li>
+                  </ul>     
 
                     <button type="button" class="btn btn-default btn-sm" onClick="window.print();">
                     <span class="glyphicon glyphicon-print"></span> Print a copy of this
                     </button>
                 </div>
 
-                <hr />
+                <hr>
                 <h4>Do you understand and consent to these terms?</h4>
-                <br />
+                <br>
 
                 <center>
                     <button type="button" class="btn btn-primary btn-lg" onClick="window.location='/exp?hitId={{ hitid }}&assignmentId={{ assignmentid }}&workerId={{ workerid }}'">
