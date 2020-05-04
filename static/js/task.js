@@ -295,7 +295,7 @@ var Stage1 = function() {
 		// when video starts!
 		videoElement.on("loadeddata", function() {
 			stimOnsetTime = new Date().getTime();
-			keyboardResonseEnabled = true;
+			keyboardResonseEnabled = false;
 			mouseResonseEnabled = true;
 			mouseTrackingEnabled = true;
 			videoRectangle = videoElement.node().getBoundingClientRect();
@@ -304,6 +304,7 @@ var Stage1 = function() {
 
 		// on video paused
 		videoElement.on("pause", function() {
+			keyboardResonseEnabled = true;
 			mouseResonseEnabled = false;
 			d3.select("#stim")
 			.append("div")
