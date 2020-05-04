@@ -32,16 +32,6 @@ var instructionPages = [ // add as a list as many pages as you like
 ];
 
 
-/********************
-* HTML manipulation
-*
-* All HTML files in the templates directory are requested 
-* from the server when the PsiTurk object is created above. We
-* need code to get those pages from the PsiTurk object and 
-* insert them into the document.
-*
-********************/
-
 var Stage1 = function() {
 
 	var stimOnsetTime, mouseClickTime; 
@@ -198,7 +188,7 @@ var Stage1 = function() {
 	stims = _.shuffle(stims);
 
 	// FOR DEBUGGING ONLY!!!
-	stims = _.first(stims, 1);
+	stims = _.first(stims, 3);
 
 	var next = function() {
 		if (stims.length===0) {
@@ -233,7 +223,7 @@ var Stage1 = function() {
 			psiTurk.recordTrialData(Object.assign(
 			{
 				'phase':"TEST",
-				'stagf': 1,				
+				'stage': 1,				
 				'mouseHitMap': mouseHitMap,
 				'videoHieght': videoRectangle.height,
 				'videoWidth': videoRectangle.width,
@@ -377,7 +367,19 @@ var Stage2 = function() {
 			finish();
 		}
 		else {
+			// take next stimulus
 			stim = stims.shift();
+			
+			// reset and disable suprise input
+			var intialValue = 50;
+
+			d3.select("#suprise-input")
+				.attr("disabled", true)
+				.property("value", intialValue)
+			d3.select("#next").attr("disabled", true);
+			d3.select("#suprise-value").html(intialValue.toString());
+
+			// load the video
 			show_video(stim);
 		}
 	};
@@ -390,7 +392,7 @@ var Stage2 = function() {
 			'stage': 2,		
 			'hit': true,
 			'trialTime':trialTime,
-          	'response': 9999 //sliderElement.value,
+          	'response': d3.select("#suprise-input").property("value")
          }, stim));
 		remvoe_video();
 		next();
@@ -419,6 +421,9 @@ var Stage2 = function() {
 
 		// on video paused
 		videoElement.on("pause", function() {
+			// enable answering
+			d3.select("#suprise-input").attr("disabled", null);
+			d3.select("#next").attr("disabled", null);
 		});
 	};
 
@@ -433,6 +438,12 @@ var Stage2 = function() {
 	// setup next button
 	var btn = document.getElementById("next");
 	btn.onclick = on_click_next;
+
+	d3.select("#suprise-input")
+		.on("change", (event) => {
+			d3.select("#suprise-value")
+				.html(d3.select("#suprise-input").property("value"));
+		});
 
 	// Start the test
 	next();
