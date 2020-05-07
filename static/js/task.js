@@ -19,30 +19,21 @@ var pages = [
 	"instructions/instruct-ready.html",
 	"stage.html",
 	"stage2.html",
+	"preloader.html",
 	"postquestionnaire.html"
 ];
 
 psiTurk.preloadPages(pages);
 
-var instructionPages = [ // add as a list as many pages as you like
+var instructionPages = [ 
 	"instructions/instruct-1.html",
 	"instructions/instruct-2.html",
-	//"instructions/instruct-3.html",
 	"instructions/instruct-ready.html"
 ];
 
+var preloaded_videos = {};
 
-var Stage1 = function() {
-
-	var stimOnsetTime, mouseClickTime; 
-	var keyboardResonseEnabled = false, mouseResonseEnabled = false, mouseTrackingEnabled = false;
-	var videoRectangle;
-	var mouseXRelativeToVideo, mouseYRelativeToVideo;
-	var videoElement;
-	var stim;
-	var mouseHitMap = [];
-
-	var stims = [
+var stims1 = [
 		"tube_4.5m_109f_1b_0",
 		"tube_4.5m_109f_1b_1",
 		"tube_4.5m_109f_2b_0",
@@ -170,8 +161,105 @@ var Stage1 = function() {
 		"tube_5m_97f_3b_1",
 		"tube_5m_97f_3b_2",
 	]
+stims1 = _.shuffle(stims1);
+
+var stims2 = [
+	"occluder_85f_37",
+	"occluder_85f_49",
+	"occluder_85f_61",
+	"occluder_85f_73",
+	"occluder_85f_85",
+]
+stims2 = _.shuffle(stims2);
+
+var Preloader = function() {
+	var stims = stims2;
+	stims.push(...stims1);
 
 	stims = _.map(stims, function (s,i) {
+			return "static/stimuli/" + s + ".avi"
+		});
+
+	var total = stims.length;
+	var loaded = 0;
+	var started_all = false;
+	var start_task = false;
+	var video_to_preload_before_task = 20;
+
+	var preload_all_videos = function() {
+		for (i = 0; i < stims.length; i++) { 
+			preload_video(stims[i], function (file, url) {
+				preloaded_videos[file] = url;
+				loaded = loaded + 1;
+				
+				var percent = Math.floor(0.97*(loaded/video_to_preload_before_task) * 100);
+				d3.select("#info").html(percent.toString() + "%");
+
+				if (loaded >= video_to_preload_before_task && started_all && !start_task) {
+					start_task = true;
+					finish_preload();
+				}
+			})
+		}
+		started_all = true;
+	}
+
+	var finish_preload = function() {
+	    psiTurk.doInstructions(
+	    	instructionPages, // a list of pages you want to display in sequence
+	    	function() { currentview = new Stage1(); } // what you want to do when you are done with instructions
+	    );
+	}
+
+	var preload_video = function(filename, callback, retry = 2) {
+		var req = new XMLHttpRequest();
+		req.open('GET', filename, true);
+		req.responseType = 'blob';
+
+		var handle_retry = function() {
+			if (retry > 0) {
+		   		preload_video(filename, callback, retry -1)
+		   	} else {
+		   		console.log("failed preloading " + filename);
+		   		callback(false);
+		   	}
+		}
+
+		req.onload = function() {
+			if (this.status === 200) {
+				var videoBlob = this.response;
+      			var vid = URL.createObjectURL(videoBlob); // IE10+
+				
+				callback(filename, vid);
+			} else {
+				handle_retry();
+			}
+		}
+
+		req.onerror = function() {
+			handle_retry();
+		}
+
+		req.send();
+	}
+
+	psiTurk.showPage('preloader.html');
+
+	preload_all_videos();
+}
+
+var Stage1 = function() {
+
+	var stimOnsetTime, mouseClickTime; 
+	var keyboardResonseEnabled = false, mouseResonseEnabled = false, mouseTrackingEnabled = false;
+	var videoRectangle;
+	var mouseXRelativeToVideo, mouseYRelativeToVideo;
+	var videoElement;
+	var stim;
+	var mouseHitMap = [];
+
+
+	stims = _.map(stims1, function (s,i) {
 		var videoParams = s.split("_").slice(1);
 		return Object.assign(
 			{
@@ -185,10 +273,9 @@ var Stage1 = function() {
 				outing: videoParams[3]
 			});
 	});
-	stims = _.shuffle(stims);
 
 	// FOR DEBUGGING ONLY!!!
-	stims = _.first(stims, 3);
+	//stims = _.first(stims, 3);
 
 	var next = function() {
 		if (stims.length===0) {
@@ -278,7 +365,17 @@ var Stage1 = function() {
 	    $("body").unbind("mousemove", handleMouseMove); // Unbind keys
 	    $("body").unbind("mousedown", handleMouseDown); // Unbind keys
 	    $("body").unbind("keydown", response_handler); // Unbind keys
-	    currentview = new Stage2();
+
+	    var instructionPages = [
+			"instructions/instruct-3.html",
+		];
+		psiTurk.doInstructions(
+	    	[
+				"instructions/instruct-3.html",
+				"instructions/instruct-ready.html"
+			], 
+	    	function() { currentview = new Stage2(); } // what you want to do when you are done with instructions
+    	);
 	};
 	
 	var show_video = function(videoData) {
@@ -287,9 +384,12 @@ var Stage1 = function() {
 			.attr("id","stim-video" + videoData.id.toString())
 			.attr("autoplay", true)
 			.attr("style", "height:400px;")
+
+		var videoUrl = preloaded_videos[videoData.filename] ?? videoData.filenames;	
+
 		videoElement
 			.append("source")
-			.attr("src", videoData.filename)
+			.attr("src", videoUrl)
 			.attr("type", "video/" + videoData.videoformat);
 
 		// when video starts!
@@ -339,15 +439,7 @@ var Stage2 = function() {
 	var sliderElement;
 	var stim;
 
-	var stims = [
-		"occluder_85f_37",
-		"occluder_85f_49",
-		"occluder_85f_61",
-		"occluder_85f_73",
-		"occluder_85f_85",
-	]
-
-	stims = _.map(stims, function (s,i) {
+	stims = _.map(stims2, function (s,i) {
 		var videoParams = s.split("_").slice(2);
 		return Object.assign(
 			{
@@ -358,10 +450,6 @@ var Stage2 = function() {
 				ball_speed: videoParams[0]
 			});
 	});
-	stims = _.shuffle(stims);
-
-	// FOR DEBUGGING ONLY!!!
-	stims = _.first(stims, 10);
 
 	var next = function() {
 		if (stims.length===0) {
@@ -410,9 +498,12 @@ var Stage2 = function() {
 			.attr("id","stim-video" + videoData.id.toString())
 			.attr("autoplay", true)
 			.attr("style" ,"height:400px;")
+
+		var videoUrl = preloaded_videos[videoData.filename] ?? videoData.filename;	
+
 		videoElement
 			.append("source")
-			.attr("src", videoData.filename)
+			.attr("src", videoUrl)
 			.attr("type", "video/" + videoData.videoformat);
 
 		// when video starts!
@@ -521,8 +612,5 @@ var currentview;
  * Run Task
  ******************/
 $(window).load( function(){
-    psiTurk.doInstructions(
-    	instructionPages, // a list of pages you want to display in sequence
-    	function() { currentview = new Stage1(); } // what you want to do when you are done with instructions
-    );
+	currentview = new Preloader();
 });
