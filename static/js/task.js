@@ -34,159 +34,161 @@ var instructionPages = [
 var preloaded_videos = {};
 
 var stims1 = [
-		"tube_4.5m_109f_1b_0",
-		"tube_4.5m_109f_1b_1",
-		"tube_4.5m_109f_2b_0",
-		"tube_4.5m_109f_2b_2",
-		"tube_4.5m_109f_3b_0",
-		"tube_4.5m_109f_3b_1",
-		"tube_4.5m_109f_3b_2",
-		"tube_4.5m_121f_1b_0",
-		"tube_4.5m_121f_1b_1",
-		"tube_4.5m_121f_2b_0",
-		"tube_4.5m_121f_2b_2",
-		"tube_4.5m_121f_3b_0",
-		"tube_4.5m_121f_3b_1",
-		"tube_4.5m_121f_3b_2",
-		"tube_4.5m_61f_1b_0",
-		"tube_4.5m_61f_1b_1",
-		"tube_4.5m_61f_2b_0",
-		"tube_4.5m_61f_2b_2",
-		"tube_4.5m_61f_3b_0",
-		"tube_4.5m_61f_3b_1",
-		"tube_4.5m_61f_3b_2",
-		"tube_4.5m_73f_1b_0",
-		"tube_4.5m_73f_1b_1",
-		"tube_4.5m_73f_2b_0",
-		"tube_4.5m_73f_2b_2",
-		"tube_4.5m_73f_3b_0",
-		"tube_4.5m_73f_3b_1",
-		"tube_4.5m_73f_3b_2",
-		"tube_4.5m_85f_1b_0",
-		"tube_4.5m_85f_1b_1",
-		"tube_4.5m_85f_2b_0",
-		"tube_4.5m_85f_2b_2",
-		"tube_4.5m_85f_3b_0",
-		"tube_4.5m_85f_3b_1",
-		"tube_4.5m_85f_3b_2",
-		"tube_4.5m_97f_1b_0",
-		"tube_4.5m_97f_1b_1",
-		"tube_4.5m_97f_2b_0",
-		"tube_4.5m_97f_2b_2",
-		"tube_4.5m_97f_3b_0",
-		"tube_4.5m_97f_3b_1",
-		"tube_4.5m_97f_3b_2",
-		"tube_4m_109f_1b_0",
-		"tube_4m_109f_1b_1",
-		"tube_4m_109f_2b_0",
-		"tube_4m_109f_2b_2",
-		"tube_4m_109f_3b_0",
-		"tube_4m_109f_3b_1",
-		"tube_4m_109f_3b_2",
-		"tube_4m_121f_1b_0",
-		"tube_4m_121f_1b_1",
-		"tube_4m_121f_2b_0",
-		"tube_4m_121f_2b_2",
-		"tube_4m_121f_3b_0",
-		"tube_4m_121f_3b_1",
-		"tube_4m_121f_3b_2",
-		"tube_4m_61f_1b_0",
-		"tube_4m_61f_1b_1",
-		"tube_4m_61f_2b_0",
-		"tube_4m_61f_2b_2",
-		"tube_4m_61f_3b_0",
-		"tube_4m_61f_3b_1",
-		"tube_4m_61f_3b_2",
-		"tube_4m_73f_1b_0",
-		"tube_4m_73f_1b_1",
-		"tube_4m_73f_2b_0",
-		"tube_4m_73f_2b_2",
-		"tube_4m_73f_3b_0",
-		"tube_4m_73f_3b_1",
-		"tube_4m_73f_3b_2",
-		"tube_4m_85f_1b_0",
-		"tube_4m_85f_1b_1",
-		"tube_4m_85f_2b_0",
-		"tube_4m_85f_2b_2",
-		"tube_4m_85f_3b_0",
-		"tube_4m_85f_3b_1",
-		"tube_4m_85f_3b_2",
-		"tube_4m_97f_1b_0",
-		"tube_4m_97f_1b_1",
-		"tube_4m_97f_2b_0",
-		"tube_4m_97f_2b_2",
-		"tube_4m_97f_3b_0",
-		"tube_4m_97f_3b_1",
-		"tube_4m_97f_3b_2",
-		"tube_5m_109f_1b_0",
-		"tube_5m_109f_1b_1",
-		"tube_5m_109f_2b_0",
-		"tube_5m_109f_2b_2",
-		"tube_5m_109f_3b_0",
-		"tube_5m_109f_3b_1",
-		"tube_5m_109f_3b_2",
-		"tube_5m_121f_1b_0",
-		"tube_5m_121f_1b_1",
-		"tube_5m_121f_2b_0",
-		"tube_5m_121f_2b_2",
-		"tube_5m_121f_3b_0",
-		"tube_5m_121f_3b_1",
-		"tube_5m_121f_3b_2",
-		"tube_5m_61f_1b_0",
-		"tube_5m_61f_1b_1",
-		"tube_5m_61f_2b_0",
-		"tube_5m_61f_2b_2",
-		"tube_5m_61f_3b_0",
-		"tube_5m_61f_3b_1",
-		"tube_5m_61f_3b_2",
-		"tube_5m_73f_1b_0",
-		"tube_5m_73f_1b_1",
-		"tube_5m_73f_2b_0",
-		"tube_5m_73f_2b_2",
-		"tube_5m_73f_3b_0",
-		"tube_5m_73f_3b_1",
-		"tube_5m_73f_3b_2",
-		"tube_5m_85f_1b_0",
-		"tube_5m_85f_1b_1",
-		"tube_5m_85f_2b_0",
-		"tube_5m_85f_2b_2",
-		"tube_5m_85f_3b_0",
-		"tube_5m_85f_3b_1",
-		"tube_5m_85f_3b_2",
-		"tube_5m_97f_1b_0",
-		"tube_5m_97f_1b_1",
-		"tube_5m_97f_2b_0",
-		"tube_5m_97f_2b_2",
-		"tube_5m_97f_3b_0",
-		"tube_5m_97f_3b_1",
-		"tube_5m_97f_3b_2",
+		"static/stimuli/tube_4.5m_109f_1b_0.avi",
+		"static/stimuli/tube_4.5m_109f_1b_1.avi",
+		"static/stimuli/tube_4.5m_109f_2b_0.avi",
+		"static/stimuli/tube_4.5m_109f_2b_2.avi",
+		"static/stimuli/tube_4.5m_109f_3b_0.avi",
+		"static/stimuli/tube_4.5m_109f_3b_1.avi",
+		"static/stimuli/tube_4.5m_109f_3b_2.avi",
+		"static/stimuli/tube_4.5m_121f_1b_0.avi",
+		"static/stimuli/tube_4.5m_121f_1b_1.avi",
+		"static/stimuli/tube_4.5m_121f_2b_0.avi",
+		"static/stimuli/tube_4.5m_121f_2b_2.avi",
+		"static/stimuli/tube_4.5m_121f_3b_0.avi",
+		"static/stimuli/tube_4.5m_121f_3b_1.avi",
+		"static/stimuli/tube_4.5m_121f_3b_2.avi",
+		"static/stimuli/tube_4.5m_61f_1b_0.avi",
+		"static/stimuli/tube_4.5m_61f_1b_1.avi",
+		"static/stimuli/tube_4.5m_61f_2b_0.avi",
+		"static/stimuli/tube_4.5m_61f_2b_2.avi",
+		"static/stimuli/tube_4.5m_61f_3b_0.avi",
+		"static/stimuli/tube_4.5m_61f_3b_1.avi",
+		"static/stimuli/tube_4.5m_61f_3b_2.avi",
+		"static/stimuli/tube_4.5m_73f_1b_0.avi",
+		"static/stimuli/tube_4.5m_73f_1b_1.avi",
+		"static/stimuli/tube_4.5m_73f_2b_0.avi",
+		"static/stimuli/tube_4.5m_73f_2b_2.avi",
+		"static/stimuli/tube_4.5m_73f_3b_0.avi",
+		"static/stimuli/tube_4.5m_73f_3b_1.avi",
+		"static/stimuli/tube_4.5m_73f_3b_2.avi",
+		"static/stimuli/tube_4.5m_85f_1b_0.avi",
+		"static/stimuli/tube_4.5m_85f_1b_1.avi",
+		"static/stimuli/tube_4.5m_85f_2b_0.avi",
+		"static/stimuli/tube_4.5m_85f_2b_2.avi",
+		"static/stimuli/tube_4.5m_85f_3b_0.avi",
+		"static/stimuli/tube_4.5m_85f_3b_1.avi",
+		"static/stimuli/tube_4.5m_85f_3b_2.avi",
+		"static/stimuli/tube_4.5m_97f_1b_0.avi",
+		"static/stimuli/tube_4.5m_97f_1b_1.avi",
+		"static/stimuli/tube_4.5m_97f_2b_0.avi",
+		"static/stimuli/tube_4.5m_97f_2b_2.avi",
+		"static/stimuli/tube_4.5m_97f_3b_0.avi",
+		"static/stimuli/tube_4.5m_97f_3b_1.avi",
+		"static/stimuli/tube_4.5m_97f_3b_2.avi",
+		"static/stimuli/tube_4m_109f_1b_0.avi",
+		"static/stimuli/tube_4m_109f_1b_1.avi",
+		"static/stimuli/tube_4m_109f_2b_0.avi",
+		"static/stimuli/tube_4m_109f_2b_2.avi",
+		"static/stimuli/tube_4m_109f_3b_0.avi",
+		"static/stimuli/tube_4m_109f_3b_1.avi",
+		"static/stimuli/tube_4m_109f_3b_2.avi",
+		"static/stimuli/tube_4m_121f_1b_0.avi",
+		"static/stimuli/tube_4m_121f_1b_1.avi",
+		"static/stimuli/tube_4m_121f_2b_0.avi",
+		"static/stimuli/tube_4m_121f_2b_2.avi",
+		"static/stimuli/tube_4m_121f_3b_0.avi",
+		"static/stimuli/tube_4m_121f_3b_1.avi",
+		"static/stimuli/tube_4m_121f_3b_2.avi",
+		"static/stimuli/tube_4m_61f_1b_0.avi",
+		"static/stimuli/tube_4m_61f_1b_1.avi",
+		"static/stimuli/tube_4m_61f_2b_0.avi",
+		"static/stimuli/tube_4m_61f_2b_2.avi",
+		"static/stimuli/tube_4m_61f_3b_0.avi",
+		"static/stimuli/tube_4m_61f_3b_1.avi",
+		"static/stimuli/tube_4m_61f_3b_2.avi",
+		"static/stimuli/tube_4m_73f_1b_0.avi",
+		"static/stimuli/tube_4m_73f_1b_1.avi",
+		"static/stimuli/tube_4m_73f_2b_0.avi",
+		"static/stimuli/tube_4m_73f_2b_2.avi",
+		"static/stimuli/tube_4m_73f_3b_0.avi",
+		"static/stimuli/tube_4m_73f_3b_1.avi",
+		"static/stimuli/tube_4m_73f_3b_2.avi",
+		"static/stimuli/tube_4m_85f_1b_0.avi",
+		"static/stimuli/tube_4m_85f_1b_1.avi",
+		"static/stimuli/tube_4m_85f_2b_0.avi",
+		"static/stimuli/tube_4m_85f_2b_2.avi",
+		"static/stimuli/tube_4m_85f_3b_0.avi",
+		"static/stimuli/tube_4m_85f_3b_1.avi",
+		"static/stimuli/tube_4m_85f_3b_2.avi",
+		"static/stimuli/tube_4m_97f_1b_0.avi",
+		"static/stimuli/tube_4m_97f_1b_1.avi",
+		"static/stimuli/tube_4m_97f_2b_0.avi",
+		"static/stimuli/tube_4m_97f_2b_2.avi",
+		"static/stimuli/tube_4m_97f_3b_0.avi",
+		"static/stimuli/tube_4m_97f_3b_1.avi",
+		"static/stimuli/tube_4m_97f_3b_2.avi",
+		"static/stimuli/tube_5m_109f_1b_0.avi",
+		"static/stimuli/tube_5m_109f_1b_1.avi",
+		"static/stimuli/tube_5m_109f_2b_0.avi",
+		"static/stimuli/tube_5m_109f_2b_2.avi",
+		"static/stimuli/tube_5m_109f_3b_0.avi",
+		"static/stimuli/tube_5m_109f_3b_1.avi",
+		"static/stimuli/tube_5m_109f_3b_2.avi",
+		"static/stimuli/tube_5m_121f_1b_0.avi",
+		"static/stimuli/tube_5m_121f_1b_1.avi",
+		"static/stimuli/tube_5m_121f_2b_0.avi",
+		"static/stimuli/tube_5m_121f_2b_2.avi",
+		"static/stimuli/tube_5m_121f_3b_0.avi",
+		"static/stimuli/tube_5m_121f_3b_1.avi",
+		"static/stimuli/tube_5m_121f_3b_2.avi",
+		"static/stimuli/tube_5m_61f_1b_0.avi",
+		"static/stimuli/tube_5m_61f_1b_1.avi",
+		"static/stimuli/tube_5m_61f_2b_0.avi",
+		"static/stimuli/tube_5m_61f_2b_2.avi",
+		"static/stimuli/tube_5m_61f_3b_0.avi",
+		"static/stimuli/tube_5m_61f_3b_1.avi",
+		"static/stimuli/tube_5m_61f_3b_2.avi",
+		"static/stimuli/tube_5m_73f_1b_0.avi",
+		"static/stimuli/tube_5m_73f_1b_1.avi",
+		"static/stimuli/tube_5m_73f_2b_0.avi",
+		"static/stimuli/tube_5m_73f_2b_2.avi",
+		"static/stimuli/tube_5m_73f_3b_0.avi",
+		"static/stimuli/tube_5m_73f_3b_1.avi",
+		"static/stimuli/tube_5m_73f_3b_2.avi",
+		"static/stimuli/tube_5m_85f_1b_0.avi",
+		"static/stimuli/tube_5m_85f_1b_1.avi",
+		"static/stimuli/tube_5m_85f_2b_0.avi",
+		"static/stimuli/tube_5m_85f_2b_2.avi",
+		"static/stimuli/tube_5m_85f_3b_0.avi",
+		"static/stimuli/tube_5m_85f_3b_1.avi",
+		"static/stimuli/tube_5m_85f_3b_2.avi",
+		"static/stimuli/tube_5m_97f_1b_0.avi",
+		"static/stimuli/tube_5m_97f_1b_1.avi",
+		"static/stimuli/tube_5m_97f_2b_0.avi",
+		"static/stimuli/tube_5m_97f_2b_2.avi",
+		"static/stimuli/tube_5m_97f_3b_0.avi",
+		"static/stimuli/tube_5m_97f_3b_1.avi",
+		"static/stimuli/tube_5m_97f_3b_2.avi",
 	]
 stims1 = _.shuffle(stims1);
 
 var stims2 = [
-	"occluder_85f_37",
-	"occluder_85f_49",
-	"occluder_85f_61",
-	"occluder_85f_73",
-	"occluder_85f_85",
+	"static/stimuli/occluder_85f_37.avi",
+	"static/stimuli/occluder_85f_49.avi",
+	"static/stimuli/occluder_85f_61.avi",
+	"static/stimuli/occluder_85f_73.avi",
+	"static/stimuli/occluder_85f_85.avi",
 ]
 stims2 = _.shuffle(stims2);
 
+var getStimName = function(path) {
+	return path.replace("static/stimuli/", '').replace(".avi", '');
+}
+
 var Preloader = function() {
-	var stims = stims2;
-	stims.push(...stims1);
-
-	stims = _.map(stims, function (s,i) {
-			return "static/stimuli/" + s + ".avi"
-		});
-
-	var total = stims.length;
-	var loaded = 0;
-	var started_all = false;
-	var start_task = false;
-	var video_to_preload_before_task = 20;
 
 	var preload_all_videos = function() {
+		var total = 0;
+		var loaded = 0;
+		var started_all = false;
+		var start_task = false;
+		var video_to_preload_before_task = 20;
+
+		// get array of interwind elements from each collection provided to function
+		var stims = _.filter(_.flatten(_.zip(arguments)), function(x) { return !!x });
+		var total = stims.length;
+
 		for (i = 0; i < stims.length; i++) { 
 			preload_video(stims[i], function (file, url) {
 				preloaded_videos[file] = url;
@@ -245,7 +247,7 @@ var Preloader = function() {
 
 	psiTurk.showPage('preloader.html');
 
-	preload_all_videos();
+	preload_all_videos(stims1, stims2);
 }
 
 var Stage1 = function() {
@@ -260,13 +262,14 @@ var Stage1 = function() {
 
 
 	stims = _.map(stims1, function (s,i) {
-		var videoParams = s.split("_").slice(1);
+		var videoName = getStimName(s);
+		var videoParams = videoName.split("_").slice(1);
 		return Object.assign(
 			{
-				filename: "static/stimuli/" + s + ".avi",
+				filename: s,
 				id: i, 
-				videoformat: "avi", 
-				videoname: s,
+				videoformat: s.substr(0, s.lastIndexOf('.')) || s, 
+				videoname: videoName,
 				tube_length: videoParams[0],
 				ball_speed: videoParams[1],
 				branches: videoParams[2],
@@ -440,13 +443,15 @@ var Stage2 = function() {
 	var stim;
 
 	stims = _.map(stims2, function (s,i) {
-		var videoParams = s.split("_").slice(2);
+		var videoName = getStimName(s);
+		var videoParams = videoName.split("_").slice(1);
+
 		return Object.assign(
 			{
-				filename: "static/stimuli/" + s + ".avi",
+				filename: s,
 				id: i, 
-				videoformat: "avi", 
-				videoname: s,
+				videoformat: s.substr(0, s.lastIndexOf('.')) || s, 
+				videoname: videoName,
 				ball_speed: videoParams[0]
 			});
 	});
