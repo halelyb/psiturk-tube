@@ -268,7 +268,7 @@ var Stage1 = function() {
 			{
 				filename: s,
 				id: i, 
-				videoformat: s.substr(0, s.lastIndexOf('.')) || s, 
+				videoformat: s.substr(s.lastIndexOf('.') + 1), 
 				videoname: videoName,
 				tube_length: videoParams[0],
 				ball_speed: videoParams[1],
