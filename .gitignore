@@ -8,3 +8,4 @@ server.log
 set-heroku*
 .psiturk_history
 *.avi
+*.mp4
