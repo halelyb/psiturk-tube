@@ -190,6 +190,7 @@ var Preloader = function() {
 		var stims = _.filter(_.flatten(_.zip(arguments)), function(x) { return !!x });
 
 		var videos_to_preload_before_task = Math.max(20, Math.ceil(stims.length * 0.15));
+		videos_to_preload_before_task = Math.min(videos_to_preload_before_task, stims.length);
 
 		for (i = 0; i < stims.length; i++) { 
 			preload_video(stims[i], function (file, url) {
