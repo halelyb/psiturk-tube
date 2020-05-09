@@ -163,6 +163,9 @@ var stims1 = [
 	]
 stims1 = _.shuffle(stims1);
 
+// FOR DEBUGGING ONLY!!!
+stims1 = _.first(stims1, 10);
+
 var stims2 = [
 	"static/stimuli/occluder_85f_37.avi",
 	"static/stimuli/occluder_85f_49.avi",
@@ -182,10 +185,11 @@ var Preloader = function() {
 		var loaded = 0;
 		var started_all = false;
 		var start_task = false;
-		var videos_to_preload_before_task = 20;
 
 		// get array of interwind elements from each collection provided to function
 		var stims = _.filter(_.flatten(_.zip(arguments)), function(x) { return !!x });
+
+		var videos_to_preload_before_task = Math.max(20, Math.ceil(stims.length * 0.15));
 
 		for (i = 0; i < stims.length; i++) { 
 			preload_video(stims[i], function (file, url) {
@@ -274,9 +278,6 @@ var Stage1 = function() {
 				outing: videoParams[3]
 			});
 	});
-
-	// FOR DEBUGGING ONLY!!!
-	//stims = _.first(stims, 3);
 
 	var next = function() {
 		if (stims.length===0) {
