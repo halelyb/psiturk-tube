@@ -49,5 +49,5 @@ persistent_history_file = .psiturk_history
 #
 #   https://<host>:<port>/ad 
 
-use_psiturk_ad_server = true
+use_psiturk_ad_server = false
 ad_location = false
