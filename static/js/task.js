@@ -179,25 +179,23 @@ var getStimName = function(path) {
 var Preloader = function() {
 
 	var preload_all_videos = function() {
-		var total = 0;
 		var loaded = 0;
 		var started_all = false;
 		var start_task = false;
-		var video_to_preload_before_task = 20;
+		var videos_to_preload_before_task = 20;
 
 		// get array of interwind elements from each collection provided to function
 		var stims = _.filter(_.flatten(_.zip(arguments)), function(x) { return !!x });
-		var total = stims.length;
 
 		for (i = 0; i < stims.length; i++) { 
 			preload_video(stims[i], function (file, url) {
 				preloaded_videos[file] = url;
 				loaded = loaded + 1;
 				
-				var percent = Math.floor(0.97*(loaded/video_to_preload_before_task) * 100);
+				var percent = Math.floor(0.97*(loaded/videos_to_preload_before_task) * 100);
 				d3.select("#info").html(percent.toString() + "%");
 
-				if (loaded >= video_to_preload_before_task && started_all && !start_task) {
+				if (loaded >= videos_to_preload_before_task && started_all && !start_task) {
 					start_task = true;
 					finish_preload();
 				}
@@ -494,7 +492,8 @@ var Stage2 = function() {
 
 	// stop showing stimuli and move to questionnaire
 	var finish = function() {
-	    currentview = new Questionnaire();
+		d3.select("#info").property("finishing task..")
+		end_exp();		
 	};
 	
 	var show_video = function(videoData) {
@@ -546,69 +545,22 @@ var Stage2 = function() {
 	next();
 };
 
+var retry_timer;
+var end_exp = function() {
+	if (!!retry_time)
+		clearTimeout(retry_timer);
 
-/****************
-* Questionnaire *
-****************/
+	d3.select("#info").append(".")
 
-var Questionnaire = function() {
-
-	var error_message = "<h1>Oops!</h1><p>Something went wrong submitting your HIT. This might happen if you lose your internet connection. Press the button to resubmit.</p><button id='resubmit'>Resubmit</button>";
-
-	record_responses = function() {
-
-		psiTurk.recordTrialData({'phase':'postquestionnaire', 'status':'submit'});
-
-		$('textarea').each( function(i, val) {
-			psiTurk.recordUnstructuredData(this.id, this.value);
-		});
-		$('select').each( function(i, val) {
-			psiTurk.recordUnstructuredData(this.id, this.value);		
-		});
-
-	};
-
-	prompt_resubmit = function() {
-		document.body.innerHTML = error_message;
-		$("#resubmit").click(resubmit);
-	};
-
-	finish_exp = function() {
-		psiTurk.completeHIT();
-
-		// if we want to do bonus, use this API call:
-		//psiTurk.computeBonus('compute_bonus', function(){
-    	//	psiTurk.completeHIT(); // when finished saving compute bonus, the quit
-        //}); 
-	}
-
-	resubmit = function() {
-		document.body.innerHTML = "<h1>Trying to resubmit...</h1>";
-		reprompt = setTimeout(prompt_resubmit, 10000);
-		
-		psiTurk.saveData({
-			success: function() {
-			    clearInterval(reprompt); 
-                finish_exp();
-			}, 
-			error: prompt_resubmit
-		});
-	};
-
-	// Load the questionnaire snippet 
-	psiTurk.showPage('postquestionnaire.html');
-	psiTurk.recordTrialData({'phase':'postquestionnaire', 'status':'begin'});
-	
-	$("#next").click(function () {
-	    record_responses();
-	    psiTurk.saveData({
-            success: function(){
-            	finish_exp();
-            }, 
-            error: prompt_resubmit
-        });
-	});	
-};
+	psiturk.saveData({
+	   success: function() {
+			psiturk.completeHIT()
+	   },
+	   error: function() {
+	   		retry_timer = setTimeout(end_exp, 3000);
+	   }
+	});
+}
 
 // Task object to keep track of the current phase
 var currentview;
