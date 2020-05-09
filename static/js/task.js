@@ -450,7 +450,7 @@ var Stage2 = function() {
 			{
 				filename: s,
 				id: i, 
-				videoformat: s.substr(0, s.lastIndexOf('.')) || s, 
+				videoformat: s.substr(s.lastIndexOf('.') + 1), 
 				videoname: videoName,
 				ball_speed: videoParams[0]
 			});
