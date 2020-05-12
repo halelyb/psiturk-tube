@@ -164,7 +164,7 @@ var stims1 = [
 stims1 = _.shuffle(stims1);
 
 // FOR DEBUGGING ONLY!!!
-stims1 = _.first(stims1, 1);
+stims1 = _.first(stims1, 20);
 
 var stims2 = [
 	"static/stimuli/occluder_85f_37.mp4",
@@ -421,7 +421,7 @@ var Stage1 = function() {
 			.attr("type", "video/" + videoData.videoformat);
 
 		// when video starts!
-		videoElement.on("loadeddata", function() {
+		videoElement.on("play", function() {
 			stimOnsetTime = new Date().getTime();
 			keyboardResonseEnabled = false;
 			mouseResonseEnabled = true;
@@ -546,7 +546,7 @@ var Stage2 = function() {
 			.attr("type", "video/" + videoData.videoformat);
 
 		// when video starts!
-		videoElement.on("loadeddata", function() {
+		videoElement.on("play", function() {
 			stimOnsetTime = new Date().getTime();
 		});
 
