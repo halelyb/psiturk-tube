@@ -1,6 +1,6 @@
 [HIT Configuration]
-title = Stroop task
-description = Judge the color of a series of words.
+title = Tube Experiment
+description = Try to catch the ball as soon as it is out of tube
 amt_keywords = Perception, Psychology
 lifetime = 24
 us_only = true
@@ -49,5 +49,5 @@ persistent_history_file = .psiturk_history
 #
 #   https://<host>:<port>/ad 
 
-use_psiturk_ad_server = false
+use_psiturk_ad_server = true
 ad_location = false
