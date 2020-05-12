@@ -164,7 +164,7 @@ var stims1 = [
 stims1 = _.shuffle(stims1);
 
 // FOR DEBUGGING ONLY!!!
-stims1 = _.first(stims1, 20);
+stims1 = _.first(stims1, 1);
 
 var stims2 = [
 	"static/stimuli/occluder_85f_37.mp4",
@@ -262,6 +262,7 @@ var Stage1 = function() {
 	var videoElement;
 	var stim;
 	var mouseHitMap = [];
+	var mouseEvent;
 
 
 	stims = _.map(stims1, function (s,i) {
@@ -329,10 +330,10 @@ var Stage1 = function() {
 	function handleMouseMove(event) {
 		if (!mouseTrackingEnabled) return;
 
-        var e = event || window.event; // IE-ism
+        mouseEvent = event || window.event; // IE-ism
 
-        mouseXRelativeToVideo = e.clientX - videoRectangle.left; //x position within the element.
-  		mouseYRelativeToVideo = e.clientY - videoRectangle.top;  //y position within the element.
+        mouseXRelativeToVideo = mouseEvent.clientX - videoRectangle.left; //x position within the element.
+  		mouseYRelativeToVideo = mouseEvent.clientY - videoRectangle.top;  //y position within the element.
 
   		trackMouseLocation();
 	}
@@ -360,7 +361,31 @@ var Stage1 = function() {
         	
         	if (!videoElement.node().paused)
         		videoElement.node().pause();
+
+        	draw_click_feedback();
         }
+    }
+
+    var draw_click_feedback = function(x, y) {
+    	var radius = 12;
+
+    	d3.select("#target-svg")
+        	.style("left", mouseEvent.clientX - radius)
+            .style("top", mouseEvent.clientY - radius)
+            .style("display", "block");
+
+    	// var svg = d3.select("#stim")
+     //        .append("svg")
+     //        .style("width", 2 * radius)
+     //        .style("height", 2 * radius)
+     //        .style("position", "absolute")
+     //    	.style("left", mouseEvent.clientX - radius)
+     //        .style("top", mouseEvent.clientY - radius)
+
+     //     svg.append("circle")  
+     //     	.attr("cx", radius)
+     //     	.attr("cy", radius)          
+     //        .attr("r", radius);
     }
 
 	// stop showing stimuli and move to questionnaire
@@ -388,7 +413,7 @@ var Stage1 = function() {
 			.attr("autoplay", true)
 			.attr("style", "height:400px;")
 
-		var videoUrl = preloaded_videos[videoData.filename] ?? videoData.filenames;	
+		var videoUrl = preloaded_videos[videoData.filename] ?? videoData.filename;	
 
 		videoElement
 			.append("source")
@@ -422,6 +447,11 @@ var Stage1 = function() {
 
 		mouseHitMap = [];
 		d3.select("#stim").html("");
+
+		d3.select("#target-svg")
+            .style("display", "none")
+        	.style("left", 0)
+            .style("top", 0);
 	};
 
 	
