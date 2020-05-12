@@ -3,9 +3,13 @@
 		<h1>Watch the entire video, and then indicate how surprising it is.</h1>
 		<p></p>
 		<div id="stim"></div>
-		<div class="row">
+		<div class="row" style="display: flex; flex-flow: column;">
 			<p id="suprise-value"></p>
-			<input type="range" id="suprise-input" name="suprise" min="0" max="100" disabled style="width: 300px; margin: auto;">
+            <div id="range-input-container" style="margin: auto;">   
+                <label for="suprise-input" style="float: left;">0<br/>not at all<br/>suprising</label>
+                <input type="range" id="suprise-input" name="suprise" min="0" max="100" disabled style="width: 300px; float: left;">
+                <label for="suprise-input" style="float: left;">100<br/>extremly<br/>suprising</label>
+            </div>
 		</div>
         <div class="row">
             <div class="col-xs-2">
